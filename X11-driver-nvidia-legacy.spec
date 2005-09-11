@@ -12,6 +12,8 @@
 %define		_rel		3
 #####################################
 #
+%define		oldname 	X11-driver-nvidia
+
 Summary:	Linux Drivers for nVidia TNT/TNT2/GeForce/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/Quadro
 Name:		X11-driver-nvidia-legacy
@@ -53,6 +55,8 @@ Obsoletes:	XFree86-OpenGL-core
 Obsoletes:	XFree86-OpenGL-libGL
 Obsoletes:	XFree86-driver-nvidia
 Obsoletes:	XFree86-nvidia
+Obsoletes:	%{oldname}
+Conflicts:	%{oldname}
 Conflicts:	XFree86-OpenGL-devel <= 4.2.0-3
 ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -91,6 +95,8 @@ Requires:	%{name} = %{version}-%{release}
 Provides:	OpenGL-devel-base
 Obsoletes:	OpenGL-devel-base
 Obsoletes:	XFree86-driver-nvidia-devel
+Obsoletes:	%{oldname}-devel
+Conflicts:	%{oldname}-devel
 Conflicts:	XFree86-OpenGL-devel < 4.3.99.902-0.3
 
 %description devel
@@ -105,6 +111,8 @@ Summary:	Tools for advanced control of nVidia graphic cards
 Summary(pl):	Narzêdzia do zarz±dzania kartami graficznymi nVidia
 Group:		Applications/System
 Obsoletes:	XFree86-driver-nvidia-progs
+Obsoletes:	%{oldname}-progs
+Conflicts:	%{oldname}-progs
 Requires:	%{name} = %{version}-%{release}
 
 %description progs
@@ -125,6 +133,8 @@ Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:%requires_releq_kernel_up}
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
+Obsoletes:	kernel-video-nvidia
+Conflicts:	kernel-video-nvidia	
 
 %description -n kernel-video-nvidia-legacy
 nVidia Architecture support for Linux kernel.
@@ -147,6 +157,8 @@ Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:%requires_releq_kernel_smp}
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
+Obsoletes:	kernel-smp-video-nvidia
+Conflicts:	kernel-smp-video-nvidia	
 
 %description -n kernel-smp-video-nvidia-legacy
 nVidia Architecture support for Linux kernel SMP.
