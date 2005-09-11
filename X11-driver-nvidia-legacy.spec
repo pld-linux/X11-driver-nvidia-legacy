@@ -46,17 +46,16 @@ Requires:	X11-modules >= %{_min_x11}
 Provides:	X11-OpenGL-core
 Provides:	X11-OpenGL-libGL
 Provides:	XFree86-OpenGL-core
-Provides:	XFree86-OpenGL-libGL
+Provides:	XFree86-OpenGL-libGL	
 Obsoletes:	Mesa
 Obsoletes:	X11-OpenGL-core
 Obsoletes:	X11-OpenGL-libGL
-Obsoletes:	X11-driver-nvidia
 Obsoletes:	XFree86-OpenGL-core
 Obsoletes:	XFree86-OpenGL-libGL
 Obsoletes:	XFree86-driver-nvidia
 Obsoletes:	XFree86-nvidia
 Obsoletes:	%{oldname} < 1.0.7174
-Conflicts:	%{oldname}
+#Conflicts:	%{oldname}
 Conflicts:	XFree86-OpenGL-devel <= 4.2.0-3
 ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
