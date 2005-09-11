@@ -111,7 +111,7 @@ Tools for advanced control of nVidia graphic cards.
 %description progs -l pl
 Narzêdzia do zarz±dzania kartami graficznymi nVidia.
 
-%package -n kernel-video-nvidia
+%package -n kernel-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
@@ -124,17 +124,17 @@ Requires:	dev >= 2.7.7-10
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
 
-%description -n kernel-video-nvidia
+%description -n kernel-video-nvidia-legacy
 nVidia Architecture support for Linux kernel.
 
-%description -n kernel-video-nvidia -l de
+%description -n kernel-video-nvidia-legacy -l de
 Die nVidia-Architektur-Unterstützung für den Linux-Kern.
 
-%description -n kernel-video-nvidia -l pl
+%description -n kernel-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa. Pakiet wymagany przez
 sterownik nVidii dla XFree86 4.
 
-%package -n kernel-smp-video-nvidia
+%package -n kernel-smp-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
@@ -146,13 +146,13 @@ Requires:	dev >= 2.7.7-10
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
 
-%description -n kernel-smp-video-nvidia
+%description -n kernel-smp-video-nvidia-legacy
 nVidia Architecture support for Linux kernel SMP.
 
-%description -n kernel-smp-video-nvidia -l de
+%description -n kernel-smp-video-nvidia-legacy -l de
 Die nVidia-Architektur-Unterstützung für den Linux-Kern SMP.
 
-%description -n kernel-smp-video-nvidia -l pl
+%description -n kernel-smp-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa SMP. Pakiet wymagany
 przez sterownik nVidii dla XFree86 4.
 
@@ -257,7 +257,7 @@ cat << EOF
  *                                                     *
  *  NOTE:                                              *
  *  You must install:                                  *
- *  kernel(24)(-smp)-video-nvidia-%{version}             *
+ *  kernel(24)(-smp)-video-nvidia-legacy-%{version}             *
  *  for this driver to work                            *
  *                                                     *
  *******************************************************
@@ -266,16 +266,16 @@ EOF
 
 %postun	-p /sbin/ldconfig
 
-%post	-n kernel-video-nvidia
+%post	-n kernel-video-nvidia-legacy
 %depmod %{_kernel_ver}
 
-%postun	-n kernel-video-nvidia
+%postun	-n kernel-video-nvidia-legacy
 %depmod %{_kernel_ver}
 
-%post	-n kernel-smp-video-nvidia
+%post	-n kernel-smp-video-nvidia-legacy
 %depmod %{_kernel_ver}smp
 
-%postun	-n kernel-smp-video-nvidia
+%postun	-n kernel-smp-video-nvidia-legacy
 %depmod %{_kernel_ver}smp
 
 %files
@@ -304,12 +304,12 @@ EOF
 %attr(755,root,root) %{_libdir}/modules/drivers/nvidia_drv.o
 
 %if %{with kernel}
-%files -n kernel-video-nvidia
+%files -n kernel-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}/misc/*.ko*
 
 %if %{with smp} && %{with dist_kernel}
-%files -n kernel-smp-video-nvidia
+%files -n kernel-smp-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}smp/misc/*.ko*
 %endif
