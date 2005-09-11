@@ -14,8 +14,8 @@
 #
 %define		oldname 	X11-driver-nvidia
 
-Summary:	Linux Drivers for nVidia TNT/TNT2/GeForce/Quadro Chips
-Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/Quadro
+Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
+Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		X11-driver-nvidia-legacy
 Version:	%{_nv_ver}.%{_nv_rel}
 Release:	%{_rel}
@@ -68,22 +68,20 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %endif
 
 %description
-This driver set adds improved 2D functionality to the XFree86 4.0 X
+This driver set adds improved 2D functionality to the Xorg X
 server as well as high performance OpenGL acceleration, AGP support,
-support for most flat panels, and 2D multiple monitor support.
+support for most flat panels, and multiple monitor support.
 
 Hardware: nVidia TNT, TNT2, GeForce, old GeForce2 or Quadro based graphics
 accelerator. The nVidia NV1 and RIVA 128/128ZX chips are supported in
 the base XFree86 4.0 install and are not supported by this driver set.
 
-Software: Linux kernel >= 2.2.12, XFree86 >= 4.0.
-
 %description -l pl
-Usprawnione sterowniki dla kart graficznych nVidia do serwera XFree86
-4.0, daj±ce wysokowydajn± akceleracjê OpenGL, obs³ugê AGP i wielu
-monitorów 2D.
+Usprawnione sterowniki dla kart graficznych nVidia do serwera X daj±ce
+wysokowydajn± akceleracjê OpenGL, obs³ugê AGP i wiele monitorów.
 
-Obs³uguj± karty nVidia TNT/TNT2/GeForce/stare GeForce2/Quadro do serwera XFree86 4.0;
+Obs³uguj± karty nVidia TNT/TNT2/GeForce/stare GeForce2/Quadro do serwera Xorg.
+Dla kart GF2 (nowych), GF3 i GF4 jest pakiet X11-driver-nvidia.
 Karty nVidia NV1 i Riva 128/128ZX s± obs³ugiwane przez sterownik nv z
 pakietów XFree86 - NIE s± obs³ugiwane przez ten pakiet.
 
