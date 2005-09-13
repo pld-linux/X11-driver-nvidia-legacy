@@ -21,7 +21,7 @@ Version:	%{_nv_ver}.%{_nv_rel}
 Release:	%{_rel}
 License:	nVidia Binary
 Vendor:		nVidia Corp.
-Group:		X11/XFree86
+Group:		X11
 # why not pkg0!?
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
 # Source0-md5:	e9840ae34ae9f5a3dc7d0fafe040c8af
