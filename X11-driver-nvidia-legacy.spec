@@ -32,7 +32,6 @@ Patch1:		%{name}-GL.patch
 Patch2:		%{name}-conftest.patch
 # http://www.minion.de/files/1.0-6629/
 URL:		http://www.nvidia.com/object/linux.html
-BuildConflicts:	XFree86-nvidia
 BuildRequires:	grep
 %{?with_dist_kernel:BuildRequires:	kernel-module-build >= 2.6.7}
 BuildRequires:	%{kgcc_package}
@@ -40,6 +39,7 @@ BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
 BuildRequires:	textutils
 #BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
+BuildConflicts:	XFree86-nvidia
 Requires:	X11-Xserver
 Requires:	X11-libs >= %{_min_x11}
 Requires:	X11-modules >= %{_min_x11}
@@ -71,18 +71,21 @@ This driver set adds improved 2D functionality to the Xorg X
 server as well as high performance OpenGL acceleration, AGP support,
 support for most flat panels, and multiple monitor support.
 
-Hardware: nVidia TNT, TNT2, GeForce, old GeForce2 or Quadro based graphics
-accelerator. The nVidia NV1 and RIVA 128/128ZX chips are supported in
-the base XFree86 4.0 install and are not supported by this driver set.
+Hardware: nVidia TNT, TNT2, GeForce, old GeForce2 or Quadro based
+graphics accelerator. New GeForce2, GeForce3 and GeForce4 adapters
+are supported by X11-driver-nvidia package. The nVidia NV1 and RIVA
+128/128ZX chips are supported in the base Xorg or XFree86 install and
+are not supported by this driver set.
 
 %description -l pl
 Usprawnione sterowniki dla kart graficznych nVidia do serwera X daj±ce
 wysokowydajn± akceleracjê OpenGL, obs³ugê AGP i wiele monitorów.
 
-Obs³uguj± karty nVidia TNT/TNT2/GeForce/stare GeForce2/Quadro do serwera Xorg.
-Dla kart GF2 (nowych), GF3 i GF4 jest pakiet X11-driver-nvidia.
-Karty nVidia NV1 i Riva 128/128ZX s± obs³ugiwane przez sterownik nv z
-pakietów XFree86 - NIE s± obs³ugiwane przez ten pakiet.
+Obs³uguj± karty nVidia TNT/TNT2/GeForce/stare GeForce2/Quadro do
+serwera Xorg. Dla kart GF2 (nowych), GF3 i GF4 jest pakiet
+X11-driver-nvidia. Karty nVidia NV1 i Riva 128/128ZX s± obs³ugiwane
+przez sterownik nv z pakietów Xorg lub XFree86 - NIE s± obs³ugiwane
+przez ten pakiet.
 
 %package devel
 Summary:	OpenGL for X11R6 development (only gl?.h)
@@ -107,10 +110,10 @@ sterowników nvidii.
 Summary:	Tools for advanced control of nVidia graphic cards
 Summary(pl):	Narzêdzia do zarz±dzania kartami graficznymi nVidia
 Group:		Applications/System
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	XFree86-driver-nvidia-progs
 Obsoletes:	%{oldname}-progs < 1.0.7174
 Conflicts:	%{oldname}-progs
-Requires:	%{name} = %{version}-%{release}
 
 %description progs
 Tools for advanced control of nVidia graphic cards.
@@ -141,7 +144,7 @@ Die nVidia-Architektur-Unterstützung für den Linux-Kern.
 
 %description -n kernel-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa. Pakiet wymagany przez
-sterownik nVidii dla XFree86 4.
+sterownik nVidii dla Xorg/XFree86.
 
 %package -n kernel-smp-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
@@ -165,7 +168,7 @@ Die nVidia-Architektur-Unterstützung für den Linux-Kern SMP.
 
 %description -n kernel-smp-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa SMP. Pakiet wymagany
-przez sterownik nVidii dla XFree86 4.
+przez sterownik nVidii dla Xorg/XFree86.
 
 %prep
 cd %{_builddir}
