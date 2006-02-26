@@ -30,6 +30,7 @@ Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/N
 Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
 Patch2:		%{name}-conftest.patch
+%{?with_verbose:Patch3:		%{name}-verbose.patch}
 # http://www.minion.de/files/1.0-6629/
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	grep
@@ -183,6 +184,9 @@ rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%if %{with verbose}
+%patch3 -p1
+%endif
 sed -i 's:-Wpointer-arith::' usr/src/nv/Makefile.kbuild
 
 %build
