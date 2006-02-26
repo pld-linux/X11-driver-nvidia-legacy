@@ -1,0 +1,152 @@
+diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linux-x86-1.0-7174-pkg1/usr/src/nv/conftest.sh
+--- NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh	2006-02-26 17:12:57.000000000 +0100
++++ NVIDIA-Linux-x86-1.0-7174-pkg1/usr/src/nv/conftest.sh	2006-02-26 17:15:42.000000000 +0100
+@@ -34,7 +34,7 @@
+            remap_page_range(NULL, 0L, 0L, 0L, pgprot);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -49,7 +49,7 @@
+            remap_page_range(0L, 0L, 0L, pgprot);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -82,7 +82,7 @@
+         fi
+ 
+         rm -f gcc-version-check
+-        $CC gcc-version-check.c -o gcc-version-check > /dev/null 2>&1
++        $CC gcc-version-check.c -o gcc-version-check 2>&1
+         if [ -f gcc-version-check ]; then
+             PROC_VERSION=`cat /proc/version`
+             MSG=`./gcc-version-check "$PROC_VERSION"`
+@@ -215,11 +215,11 @@
+               }
+             }" > conftest$$.c
+ 
+-            $CC $CFLAGS -o conftest$$ conftest$$.c > /dev/null 2>&1
++            $CC $CFLAGS -o conftest$$ conftest$$.c 2>&1
+             rm -f conftest$$.c
+ 
+             if [ -f conftest$$ ]; then
+-                ./conftest$$ > /dev/null 2>&1
++                ./conftest$$ 
+                 if [ $? = "0" ]; then
+                     ln -s Makefile.kbuild Makefile
+                 else
+@@ -285,7 +285,7 @@
+             return 0;
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -o conftest$$ conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -o conftest$$ conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$ ]; then
+@@ -319,7 +319,7 @@
+             #endif
+             " > conftest$$.c
+ 
+-            $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++            $CC $CFLAGS -c conftest$$.c 2>&1
+             rm -f conftest$$.c
+ 
+             if [ -f conftest$$.o ]; then
+@@ -366,7 +366,7 @@
+             return change_page_attr(pp, i, prot);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -387,7 +387,7 @@
+             pci_disable_device(dev);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -409,7 +409,7 @@
+             return class_simple_create(owner, name);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -431,7 +431,7 @@
+             return pci_get_class(class, from);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -453,7 +453,7 @@
+             remap_pfn_range(NULL, 0L, 0L, 0L, pgprot);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -479,7 +479,7 @@
+         #error
+         #endif" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -512,7 +512,7 @@
+             return current->signal->rlim;
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -Wno-error -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -Wno-error -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -536,7 +536,7 @@
+             return agp_backend_acquire(dev);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -556,7 +556,7 @@
+         void *nv_vmap(struct page **pg, int cnt) {
+             return vmap(pg, cnt);
+         }" > conftest$$.c
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -570,7 +570,7 @@
+         void *nv_vmap(struct page **pg, int cnt) {
+             return vmap(pg, cnt, 0, PAGE_KERNEL);
+         }" > conftest$$.c
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
