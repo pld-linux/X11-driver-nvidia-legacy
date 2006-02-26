@@ -9,3 +9,14 @@ diff -uNr NVIDIA-Linux-x86-1.0-5336-pkg1/usr/src/nv/nv.c NVIDIA-Linux-x86-1.0-53
  };
  
  static nv_file_private_t *
+--- NVIDIA-Linux-x86_64-1.0-8178-pkg1/usr/src/nv/conftest.sh.orig	2005-12-15 02:34:40.000000000 +0100
++++ NVIDIA-Linux-x86_64-1.0-8178-pkg1/usr/src/nv/conftest.sh	2006-01-26 19:21:46.000000000 +0100
+@@ -23,7 +23,7 @@
+ 
+ CFLAGS="-D__KERNEL__ \
+ -nostdinc -isystem $ISYSTEM \
+--Werror -Wimplicit-function-declaration"
++-Werror-implicit-function-declaration"
+ 
+ if [ "$OUTPUT" != "$SOURCES" ]; then
+     ARCH=`uname -m | sed -e 's/i.86/i386/'`
