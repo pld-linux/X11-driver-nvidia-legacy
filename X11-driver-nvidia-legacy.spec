@@ -5,7 +5,7 @@
 %bcond_without	kernel		# without kernel packages
 %bcond_with	verbose		# verbose build (V=1)
 #
-### NOT CHANGE THIS #################
+### DON'T CHANGE THIS ###############
 %define		_nv_ver		1.0
 %define		_nv_rel		7174
 %define		_min_x11	6.7.0
@@ -30,7 +30,7 @@ Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/N
 Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
 Patch2:		%{name}-conftest.patch
-%{?with_verbose:Patch3:		%{name}-verbose.patch}
+Patch3:		%{name}-verbose.patch
 # http://www.minion.de/files/1.0-6629/
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	grep
