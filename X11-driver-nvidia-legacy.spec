@@ -20,7 +20,6 @@ Name:		X11-driver-nvidia-legacy
 Version:	%{_nv_ver}.%{_nv_rel}
 Release:	%{_rel}
 License:	nVidia Binary
-Vendor:		nVidia Corp.
 Group:		X11
 # why not pkg0!?
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
@@ -33,13 +32,13 @@ Patch2:		%{name}-conftest.patch
 Patch3:		%{name}-verbose.patch
 # http://www.minion.de/files/1.0-6629/
 URL:		http://www.nvidia.com/object/linux.html
+BuildRequires:	%{kgcc_package}
+#BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
 BuildRequires:	grep
 %{?with_dist_kernel:BuildRequires:	kernel-module-build >= 2.6.7}
-BuildRequires:	%{kgcc_package}
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
 BuildRequires:	textutils
-#BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
 BuildConflicts:	XFree86-nvidia
 Requires:	X11-Xserver
 Requires:	X11-libs >= %{_min_x11}
@@ -47,7 +46,8 @@ Requires:	X11-modules >= %{_min_x11}
 Provides:	X11-OpenGL-core
 Provides:	X11-OpenGL-libGL
 Provides:	XFree86-OpenGL-core
-Provides:	XFree86-OpenGL-libGL	
+Provides:	XFree86-OpenGL-libGL
+Obsoletes:	%{oldname} < 1.0.7174
 Obsoletes:	Mesa
 Obsoletes:	X11-OpenGL-core
 Obsoletes:	X11-OpenGL-libGL
@@ -55,7 +55,6 @@ Obsoletes:	XFree86-OpenGL-core
 Obsoletes:	XFree86-OpenGL-libGL
 Obsoletes:	XFree86-driver-nvidia
 Obsoletes:	XFree86-nvidia
-Obsoletes:	%{oldname} < 1.0.7174
 #Conflicts:	%{oldname}
 Conflicts:	XFree86-OpenGL-devel <= 4.2.0-3
 ExclusiveArch:	%{ix86} %{x8664}
@@ -94,9 +93,9 @@ Summary(pl):	Pliki nag³ówkowe OpenGL dla systemu X11R6 (tylko gl?.h)
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Provides:	OpenGL-devel-base
+Obsoletes:	%{oldname}-devel < 1.0.7174
 Obsoletes:	OpenGL-devel-base
 Obsoletes:	XFree86-driver-nvidia-devel
-Obsoletes:	%{oldname}-devel < 1.0.7174
 Conflicts:	%{oldname}-devel
 Conflicts:	XFree86-OpenGL-devel < 4.3.99.902-0.3
 
@@ -112,8 +111,8 @@ Summary:	Tools for advanced control of nVidia graphic cards
 Summary(pl):	Narzêdzia do zarz±dzania kartami graficznymi nVidia
 Group:		Applications/System
 Requires:	%{name} = %{version}-%{release}
-Obsoletes:	XFree86-driver-nvidia-progs
 Obsoletes:	%{oldname}-progs < 1.0.7174
+Obsoletes:	XFree86-driver-nvidia-progs
 Conflicts:	%{oldname}-progs
 
 %description progs
@@ -135,7 +134,7 @@ Requires:	dev >= 2.7.7-10
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
 Obsoletes:	kernel-video-nvidia < 1.0.7174
-Conflicts:	kernel-video-nvidia	
+Conflicts:	kernel-video-nvidia
 
 %description -n kernel-video-nvidia-legacy
 nVidia Architecture support for Linux kernel.
@@ -159,7 +158,7 @@ Requires:	dev >= 2.7.7-10
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
 Obsoletes:	kernel-smp-video-nvidia < 1.0.7174
-Conflicts:	kernel-smp-video-nvidia	
+Conflicts:	kernel-smp-video-nvidia
 
 %description -n kernel-smp-video-nvidia-legacy
 nVidia Architecture support for Linux kernel SMP.
