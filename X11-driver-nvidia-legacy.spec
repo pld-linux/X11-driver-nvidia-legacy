@@ -9,7 +9,7 @@
 %define		_nv_ver		1.0
 %define		_nv_rel		7174
 %define		_min_x11	6.7.0
-%define		_rel		6
+%define		_rel		6.2
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
@@ -18,7 +18,7 @@ Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		X11-driver-nvidia-legacy
 Version:	%{_nv_ver}.%{_nv_rel}
-Release:	%{_rel}.2
+Release:	%{_rel}
 License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
