@@ -18,7 +18,7 @@ Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		X11-driver-nvidia-legacy
 Version:	%{_nv_ver}.%{_nv_rel}
-Release:	%{_rel}.1
+Release:	%{_rel}.2
 License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
@@ -30,7 +30,11 @@ Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
 Patch2:		%{name}-conftest.patch
 Patch3:		%{name}-verbose.patch
-#Patch4:	%{name}-nv_map_sg.patch
+Patch4:		NVIDIA_kernel-1.0-7174-1258475.diff
+Patch5:		NVIDIA_kernel-1.0-7174-1296092.diff
+Patch6:		NVIDIA_kernel-1.0-7174-1321905.diff
+Patch7:		NVIDIA_kernel-1.0-7174-1361053.diff
+Patch8:		NVIDIA_kernel-1.0-7174-1386866.diff
 # http://www.minion.de/files/1.0-6629/
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	%{kgcc_package}
@@ -187,7 +191,11 @@ rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
 %if %{with verbose}
 %patch3 -p1
 %endif
-#%patch4 -p1
+%patch4 -p0
+%patch5 -p0
+%patch6 -p0
+%patch7 -p0
+%patch8 -p0
 sed -i 's:-Wpointer-arith::' usr/src/nv/Makefile.kbuild
 
 %build
