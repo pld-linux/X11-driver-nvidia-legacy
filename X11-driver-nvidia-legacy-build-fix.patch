@@ -1,0 +1,16 @@
+diff -ur nv.orig/usr/src/nv/conftest.sh nv/usr/src/nv/conftest.sh
+--- nv.orig/usr/src/nv/conftest.sh	2006-03-14 18:48:33.000000000 +0100
++++ nv/usr/src/nv/conftest.sh	2006-03-14 18:47:51.000000000 +0100
+@@ -15,9 +15,11 @@
+ -nostdinc -isystem $ISYSTEM \
+ -Werror-implicit-function-declaration"
+ 
++
+ if [ "$OUTPUT" != "$SOURCES" ]; then
++    ARCH=`uname -m | sed -e 's/i.86/i386/'`
+     CFLAGS="$CFLAGS -I$OUTPUT/include2 -I$OUTPUT/include \
+--I$HEADERS -I$HEADERS/asm/mach-default"
++-I$HEADERS -I$HEADERS/asm-$ARCH/mach-default"
+ else
+     CFLAGS="$CFLAGS -I$HEADERS -I$HEADERS/asm/mach-default"
+ fi
