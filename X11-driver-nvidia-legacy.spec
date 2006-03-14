@@ -9,7 +9,7 @@
 %define		_nv_ver		1.0
 %define		_nv_rel		7174
 %define		_min_x11	6.7.0
-%define		_rel		6.2
+%define		_rel		6.3
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
@@ -35,6 +35,7 @@ Patch5:		NVIDIA_kernel-1.0-7174-1296092.diff
 Patch6:		NVIDIA_kernel-1.0-7174-1321905.diff
 Patch7:		NVIDIA_kernel-1.0-7174-1361053.diff
 Patch8:		NVIDIA_kernel-1.0-7174-1386866.diff
+Patch9:		%{name}-build-fix.patch
 # http://www.minion.de/files/1.0-6629/
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	%{kgcc_package}
@@ -196,6 +197,7 @@ rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
 %patch6 -p0
 %patch7 -p0
 %patch8 -p0
+%patch9 -p1
 sed -i 's:-Wpointer-arith::' usr/src/nv/Makefile.kbuild
 
 %build
