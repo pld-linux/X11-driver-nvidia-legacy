@@ -40,11 +40,9 @@ Patch9:		%{name}-build-fix.patch
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	%{kgcc_package}
 #BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
-BuildRequires:	grep
-%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 2.6.7}
+%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 3:2.6.7}
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
-BuildRequires:	textutils
 BuildConflicts:	XFree86-nvidia
 Requires:	X11-Xserver
 Requires:	X11-libs >= %{_min_x11}
@@ -73,13 +71,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %endif
 
 %description
-This driver set adds improved 2D functionality to the Xorg X
-server as well as high performance OpenGL acceleration, AGP support,
-support for most flat panels, and multiple monitor support.
+This driver set adds improved 2D functionality to the Xorg X server as
+well as high performance OpenGL acceleration, AGP support, support for
+most flat panels, and multiple monitor support.
 
 Hardware: nVidia TNT, TNT2, GeForce, old GeForce2 or Quadro based
-graphics accelerator. New GeForce2, GeForce3 and GeForce4 adapters
-are supported by X11-driver-nvidia package. The nVidia NV1 and RIVA
+graphics accelerator. New GeForce2, GeForce3 and GeForce4 adapters are
+supported by X11-driver-nvidia package. The nVidia NV1 and RIVA
 128/128ZX chips are supported in the base Xorg or XFree86 install and
 are not supported by this driver set.
 
