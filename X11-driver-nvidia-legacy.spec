@@ -7,9 +7,9 @@
 #
 ### DON'T CHANGE THIS ###############
 %define		_nv_ver		1.0
-%define		_nv_rel		7174
+%define		_nv_rel		7182
 %define		_min_x11	6.7.0
-%define		_rel		8
+%define		_rel		0.1
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
@@ -23,9 +23,9 @@ License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
-# Source0-md5:	e9840ae34ae9f5a3dc7d0fafe040c8af
+# Source0-md5:	a7c84815943dc4784a207608abf2e5d6
 Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2.run
-# Source1-md5:	125ec3ecc64202c6c27ef762a438d0f0
+# Source1-md5:	5a670a73a8887bdc776064aecae8f769
 Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
 Patch2:		%{name}-conftest.patch
@@ -184,18 +184,18 @@ rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
 /bin/sh %{SOURCE1} --extract-only
 %setup -qDT -n NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2
 %endif
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 #%patch2 -p1
 %if %{with verbose}
 %patch3 -p1
 %endif
-%patch4 -p0
-%patch5 -p0
-%patch6 -p0
-%patch7 -p0
-%patch8 -p0
-%patch9 -p1
+#%patch4 -p0
+#%patch5 -p0
+#%patch6 -p0
+#%patch7 -p0
+#%patch8 -p0
+#%patch9 -p1
 sed -i 's:-Wpointer-arith::' usr/src/nv/Makefile.kbuild
 
 %build
