@@ -1,8 +1,7 @@
-diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linux-x86-1.0-7174-pkg1/usr/src/nv/conftest.sh
---- NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh	2006-02-26 17:12:57.000000000 +0100
-+++ NVIDIA-Linux-x86-1.0-7174-pkg1/usr/src/nv/conftest.sh	2006-02-26 17:15:42.000000000 +0100
-@@ -34,7 +34,7 @@
-            remap_page_range(NULL, 0L, 0L, 0L, pgprot);
+--- usr/src/nv/conftest.sh.orig	2006-04-19 22:24:40.000000000 +0200
++++ usr/src/nv/conftest.sh	2006-06-29 21:16:25.094361672 +0200
+@@ -48,7 +48,7 @@
+            remap_page_range();
          }" > conftest$$.c
  
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
@@ -10,8 +9,8 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -49,7 +49,7 @@
-            remap_page_range(0L, 0L, 0L, pgprot);
+@@ -62,7 +62,7 @@
+            return remap_page_range(NULL, 0L, 0L, 0L, pgprot);
          }" > conftest$$.c
  
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
@@ -19,39 +18,57 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -82,7 +82,7 @@
+@@ -77,7 +77,7 @@
+            return remap_page_range(0L, 0L, 0L, pgprot);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -110,7 +110,7 @@
          fi
  
          rm -f gcc-version-check
 -        $CC gcc-version-check.c -o gcc-version-check > /dev/null 2>&1
 +        $CC gcc-version-check.c -o gcc-version-check 2>&1
-         if [ -f gcc-version-check ]; then
-             PROC_VERSION=`cat /proc/version`
-             MSG=`./gcc-version-check "$PROC_VERSION"`
-@@ -215,11 +215,11 @@
+         if [ ! -f gcc-version-check ]; then
+             MSG="Could not compile gcc-version-check.c.  Please be sure you"
+             MSG="$MSG have your distribution's libc development package"
+@@ -210,7 +210,7 @@
+         fi
+ 
+         if lsmod | grep -wq $MODULE; then
+-          rmmod $MODULE > /dev/null 2>&1
++          rmmod $MODULE 2>&1
+         fi
+ 
+         if lsmod | grep -wq $MODULE; then
+@@ -258,11 +258,11 @@
                }
              }" > conftest$$.c
  
--            $CC $CFLAGS -o conftest$$ conftest$$.c > /dev/null 2>&1
-+            $CC $CFLAGS -o conftest$$ conftest$$.c 2>&1
+-            $HOSTCC $CFLAGS -o conftest$$ conftest$$.c > /dev/null 2>&1
++            $HOSTCC $CFLAGS -o conftest$$ conftest$$.c 2>&1
              rm -f conftest$$.c
  
              if [ -f conftest$$ ]; then
 -                ./conftest$$ > /dev/null 2>&1
-+                ./conftest$$ 
++                ./conftest$$ 2>&1
                  if [ $? = "0" ]; then
                      ln -s Makefile.kbuild Makefile
                  else
-@@ -285,7 +285,7 @@
-             return 0;
-         }" > conftest$$.c
+@@ -347,7 +347,7 @@
+                 return 0;
+             }" > conftest$$.c
  
--        $CC $CFLAGS -o conftest$$ conftest$$.c > /dev/null 2>&1
-+        $CC $CFLAGS -o conftest$$ conftest$$.c 2>&1
-         rm -f conftest$$.c
+-            $HOSTCC $CFLAGS -o conftest$$ conftest$$.c > /dev/null 2>&1
++            $HOSTCC $CFLAGS -o conftest$$ conftest$$.c 2>&1
+             rm -f conftest$$.c
  
-         if [ -f conftest$$ ]; then
-@@ -319,7 +319,7 @@
+             if [ -f conftest$$ ]; then
+@@ -402,7 +402,7 @@
              #endif
              " > conftest$$.c
  
@@ -60,8 +77,17 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
              rm -f conftest$$.c
  
              if [ -f conftest$$.o ]; then
-@@ -366,7 +366,7 @@
-             return change_page_attr(pp, i, prot);
+@@ -456,7 +456,7 @@
+             #endif
+             " > conftest$$.c
+ 
+-            $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++            $CC $CFLAGS -c conftest$$.c 2>&1
+             rm -f conftest$$.c
+ 
+             if [ -f conftest$$.o ]; then
+@@ -504,7 +504,7 @@
+             change_page_attr();
          }" > conftest$$.c
  
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
@@ -69,8 +95,8 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -387,7 +387,7 @@
-             pci_disable_device(dev);
+@@ -525,7 +525,7 @@
+             pci_get_class();
          }" > conftest$$.c
  
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
@@ -78,8 +104,8 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -409,7 +409,7 @@
-             return class_simple_create(owner, name);
+@@ -546,7 +546,7 @@
+             remap_pfn_range();
          }" > conftest$$.c
  
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
@@ -87,43 +113,16 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -431,7 +431,7 @@
-             return pci_get_class(class, from);
-         }" > conftest$$.c
- 
--        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
-+        $CC $CFLAGS -c conftest$$.c 2>&1
-         rm -f conftest$$.c
- 
-         if [ -f conftest$$.o ]; then
-@@ -453,7 +453,7 @@
-             remap_pfn_range(NULL, 0L, 0L, 0L, pgprot);
-         }" > conftest$$.c
- 
--        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
-+        $CC $CFLAGS -c conftest$$.c 2>&1
-         rm -f conftest$$.c
- 
-         if [ -f conftest$$.o ]; then
-@@ -479,7 +479,7 @@
-         #error
-         #endif" > conftest$$.c
- 
--        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
-+        $CC $CFLAGS -c conftest$$.c 2>&1
-         rm -f conftest$$.c
- 
-         if [ -f conftest$$.o ]; then
-@@ -512,7 +512,7 @@
+@@ -567,7 +567,7 @@
              return current->signal->rlim;
          }" > conftest$$.c
  
--        $CC $CFLAGS -Wno-error -c conftest$$.c > /dev/null 2>&1
-+        $CC $CFLAGS -Wno-error -c conftest$$.c 2>&1
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -536,7 +536,7 @@
+@@ -591,7 +591,7 @@
              return agp_backend_acquire(dev);
          }" > conftest$$.c
  
@@ -132,19 +131,55 @@ diff -uNr NVIDIA-Linux-x86-1.0-7174-pkg1.orig/usr/src/nv/conftest.sh NVIDIA-Linu
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -556,7 +556,7 @@
-         void *nv_vmap(struct page **pg, int cnt) {
-             return vmap(pg, cnt);
+@@ -613,7 +613,7 @@
+             vmap();
          }" > conftest$$.c
+ 
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
 +        $CC $CFLAGS -c conftest$$.c 2>&1
          rm -f conftest$$.c
  
          if [ -f conftest$$.o ]; then
-@@ -570,7 +570,7 @@
-         void *nv_vmap(struct page **pg, int cnt) {
+@@ -626,7 +626,7 @@
+             return vmap(pg, cnt);
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -641,7 +641,7 @@
              return vmap(pg, cnt, 0, PAGE_KERNEL);
          }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -666,7 +666,7 @@
+             pm_message_t *p = &state;
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -687,7 +687,7 @@
+             pci_choose_state();
+         }" > conftest$$.c
+ 
+-        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
++        $CC $CFLAGS -c conftest$$.c 2>&1
+         rm -f conftest$$.c
+ 
+         if [ -f conftest$$.o ]; then
+@@ -708,7 +708,7 @@
+             vm_insert_page();
+         }" > conftest$$.c
+ 
 -        $CC $CFLAGS -c conftest$$.c > /dev/null 2>&1
 +        $CC $CFLAGS -c conftest$$.c 2>&1
          rm -f conftest$$.c
