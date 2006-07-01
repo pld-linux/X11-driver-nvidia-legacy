@@ -28,10 +28,7 @@ Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/N
 # Source1-md5:	5a670a73a8887bdc776064aecae8f769
 Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
-Patch2:		%{name}-conftest.patch
-Patch3:		%{name}-verbose.patch
-Patch4:		%{name}-build-fix.patch
-# http://www.minion.de/files/1.0-6629/
+Patch2:		%{name}-verbose.patch
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	%{kgcc_package}
 #BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
@@ -179,13 +176,11 @@ rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
 /bin/sh %{SOURCE1} --extract-only
 %setup -qDT -n NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2
 %endif
-#%patch0 -p1
+%patch0 -p1
 %patch1 -p1
-#%patch2 -p1
 %if %{with verbose}
-%patch3 -p0
+%patch2 -p0
 %endif
-#%patch4 -p1
 sed -i 's:-Wpointer-arith::' usr/src/nv/Makefile.kbuild
 
 %build
@@ -201,7 +196,7 @@ for cfg in %{?with_dist_kernel:%{?with_smp:smp} up}%{!?with_dist_kernel:nondist}
 	ln -sf %{_kernelsrcdir}/Module.symvers-$cfg o/Module.symvers
 	ln -sf %{_kernelsrcdir}/include/linux/autoconf-$cfg.h o/include/linux/autoconf.h
 %if %{with dist_kernel}
-	%{__make} -C %{_kernelsrcdir} O=$PWD/o prepare scripts
+	%{__make} -j1 -C %{_kernelsrcdir} O=$PWD/o prepare scripts
 %else
 	install -d o/include/config
 	touch o/include/config/MARKER
