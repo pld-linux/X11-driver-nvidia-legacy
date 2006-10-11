@@ -7,9 +7,9 @@
 #
 ### DON'T CHANGE THIS ###############
 %define		_nv_ver		1.0
-%define		_nv_rel		7182
+%define		_nv_rel		7184
 %define		_min_x11	6.7.0
-%define		_rel		3
+%define		_rel		1
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
@@ -23,9 +23,9 @@ License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
-# Source0-md5:	a7c84815943dc4784a207608abf2e5d6
+# Source0-md5:	68cf7f155786daf6946b9daeb64c7a35
 Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2.run
-# Source1-md5:	5a670a73a8887bdc776064aecae8f769
+# Source1-md5:	332850387c4e7a4619753b856e3199e5
 Source2:	%{oldname}-settings.desktop
 Source3:	%{oldname}-xinitrc.sh
 Patch0:		%{name}-gcc34.patch
@@ -193,6 +193,7 @@ for cfg in %{?with_dist_kernel:%{?with_smp:smp} up}%{!?with_dist_kernel:nondist}
 	if [ ! -r "%{_kernelsrcdir}/config-$cfg" ]; then
 		exit 1
 	fi
+	rm -rf o
 	install -d o/include/linux
 	ln -sf %{_kernelsrcdir}/config-$cfg o/.config
 	ln -sf %{_kernelsrcdir}/Module.symvers-$cfg o/Module.symvers
@@ -200,7 +201,6 @@ for cfg in %{?with_dist_kernel:%{?with_smp:smp} up}%{!?with_dist_kernel:nondist}
 %if %{with dist_kernel}
 	%{__make} -j1 -C %{_kernelsrcdir} O=$PWD/o prepare scripts
 %else
-	install -d o/include/config
 	touch o/include/config/MARKER
 	ln -sf %{_kernelsrcdir}/scripts o/scripts
 %endif
@@ -229,7 +229,7 @@ install -d $RPM_BUILD_ROOT%{_libdir}/modules/{drivers,extensions} \
 ln -sf $RPM_BUILD_ROOT%{_libdir} $RPM_BUILD_ROOT%{_prefix}/../lib
 
 install usr/bin/nvidia-settings $RPM_BUILD_ROOT%{_bindir}
-install usr/share/doc/nvidia-settings.png $RPM_BUILD_ROOT%{_pixmapsdir}
+install usr/share/pixmaps/nvidia-settings.png $RPM_BUILD_ROOT%{_pixmapsdir}
 install %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}/nvidia-settings.desktop
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/X11/xinit/xinitrc.d/nvidia-settings.sh
 install usr/lib/libnvidia-tls.so.%{version} $RPM_BUILD_ROOT/usr/%{_lib}
