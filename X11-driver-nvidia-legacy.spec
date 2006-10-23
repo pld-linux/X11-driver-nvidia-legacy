@@ -75,12 +75,6 @@ supported by X11-driver-nvidia package. The nVidia NV1 and RIVA
 128/128ZX chips are supported in the base Xorg or XFree86 install and
 are not supported by this driver set.
 
-SECURITY: This version (7184) is supposed to be localy and remotely 
-exploitable - look at the security advisory 
-http://download2.rapid7.com/r7-0025/
-SOLUTION: Move to nv driver or disable accelerated rendering 
-("RenderAccel" option).
-
 %description -l pl
 Usprawnione sterowniki dla kart graficznych nVidia do serwera X daj±ce
 wysokowydajn± akceleracjê OpenGL, obs³ugê AGP i wiele monitorów.
@@ -90,12 +84,6 @@ serwera Xorg. Dla kart GF2 (nowych), GF3 i GF4 jest pakiet
 X11-driver-nvidia. Karty nVidia NV1 i Riva 128/128ZX s± obs³ugiwane
 przez sterownik nv z pakietów Xorg lub XFree86 - NIE s± obs³ugiwane
 przez ten pakiet.
-
-BEZPIECZEÑSTWO: Ta wersja sterownika (7184) jest podatna na zdalne 
-jak i lokalne ataki pozwalaj±ce na wykonanie kodu z uprawnieniami 
-roota - szczegó³y na stronie http://download2.rapid7.com/r7-0025/
-ROZWI¡ZANIE: Przej¶cie na sterownik nv lub deaktywacja akcelerowanego
-wy¶wietlania (opcja "RenderAccel").
 
 %package devel
 Summary:	OpenGL for X11R6 development (only gl?.h)
@@ -293,19 +281,6 @@ cat << EOF
  *  You must install:                                  *
  *  kernel(24)(-smp)-video-nvidia-legacy-%{version}             *
  *  for this driver to work                            *
- *                                                     *
- *******************************************************
-
- *******************************************************
- *                                                     *
- * SECURITY:                                           *
- * This version (1.0-7184) is supposed to be localy    *
- * and remotely exploitable - look at the security     *
- * advisory http://download2.rapid7.com/r7-0025/       *
- *                                                     *
- * SOLUTION:                                           *
- * Move to nv driver or disable accelerated rendering  *
- * ("RenderAccel" option).                             *
  *                                                     *
  *******************************************************
 
