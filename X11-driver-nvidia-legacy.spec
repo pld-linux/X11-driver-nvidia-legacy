@@ -348,5 +348,5 @@ EOF
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/nvidia-settings
 %attr(755,root,root) /etc/X11/xinit/xinitrc.d/*.sh
-%{_desktopdir}/*
+%{_desktopdir}/*.desktop
 %{_pixmapsdir}/*
