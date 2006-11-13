@@ -34,7 +34,7 @@ Patch2:		%{name}-verbose.patch
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	%{kgcc_package}
 #BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
-%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 3:2.6.7}
+%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
 BuildRequires:	rpmbuild(macros) >= 1.326
 BuildRequires:	sed >= 4.0
 BuildConflicts:	XFree86-nvidia
@@ -119,7 +119,7 @@ Tools for advanced control of nVidia graphic cards.
 %description progs -l pl
 Narzêdzia do zarz±dzania kartami graficznymi nVidia.
 
-%package -n kernel-video-nvidia-legacy
+%package -n kernel%{_alt_kernel}-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
@@ -131,20 +131,20 @@ Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:%requires_releq_kernel_up}
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
-Obsoletes:	kernel-video-nvidia < 1.0.7174
-Conflicts:	kernel-video-nvidia
+Obsoletes:	kernel%{_alt_kernel}-video-nvidia < 1.0.7174
+Conflicts:	kernel%{_alt_kernel}-video-nvidia
 
-%description -n kernel-video-nvidia-legacy
+%description -n kernel%{_alt_kernel}-video-nvidia-legacy
 nVidia Architecture support for Linux kernel.
 
-%description -n kernel-video-nvidia-legacy -l de
+%description -n kernel%{_alt_kernel}-video-nvidia-legacy -l de
 Die nVidia-Architektur-Unterstützung für den Linux-Kern.
 
-%description -n kernel-video-nvidia-legacy -l pl
+%description -n kernel%{_alt_kernel}-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa. Pakiet wymagany przez
 sterownik nVidii dla Xorg/XFree86.
 
-%package -n kernel-smp-video-nvidia-legacy
+%package -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
@@ -155,16 +155,16 @@ Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:%requires_releq_kernel_smp}
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
-Obsoletes:	kernel-smp-video-nvidia < 1.0.7174
-Conflicts:	kernel-smp-video-nvidia
+Obsoletes:	kernel%{_alt_kernel}-smp-video-nvidia < 1.0.7174
+Conflicts:	kernel%{_alt_kernel}-smp-video-nvidia
 
-%description -n kernel-smp-video-nvidia-legacy
+%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 nVidia Architecture support for Linux kernel SMP.
 
-%description -n kernel-smp-video-nvidia-legacy -l de
+%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy -l de
 Die nVidia-Architektur-Unterstützung für den Linux-Kern SMP.
 
-%description -n kernel-smp-video-nvidia-legacy -l pl
+%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa SMP. Pakiet wymagany
 przez sterownik nVidii dla Xorg/XFree86.
 
@@ -253,16 +253,16 @@ EOF
 
 %postun	-p /sbin/ldconfig
 
-%post	-n kernel-video-nvidia-legacy
+%post	-n kernel%{_alt_kernel}-video-nvidia-legacy
 %depmod %{_kernel_ver}
 
-%postun	-n kernel-video-nvidia-legacy
+%postun	-n kernel%{_alt_kernel}-video-nvidia-legacy
 %depmod %{_kernel_ver}
 
-%post	-n kernel-smp-video-nvidia-legacy
+%post	-n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 %depmod %{_kernel_ver}smp
 
-%postun	-n kernel-smp-video-nvidia-legacy
+%postun	-n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 %depmod %{_kernel_ver}smp
 
 %files
@@ -291,12 +291,12 @@ EOF
 %attr(755,root,root) %{_libdir}/modules/drivers/nvidia_drv.o
 
 %if %{with kernel}
-%files -n kernel-video-nvidia-legacy
+%files -n kernel%{_alt_kernel}-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}/misc/*.ko*
 
 %if %{with smp} && %{with dist_kernel}
-%files -n kernel-smp-video-nvidia-legacy
+%files -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}smp/misc/*.ko*
 %endif
