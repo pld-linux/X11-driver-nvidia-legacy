@@ -4,12 +4,17 @@
 %bcond_without	smp		# without smp packages
 %bcond_without	kernel		# without kernel packages
 %bcond_with	verbose		# verbose build (V=1)
+%bcond_with	grsec_kernel	# build for kernel-grsecurity
+#
+%if %{with kernel} && %{with dist_kernel} && %{with grsec_kernel}
+%define	alt_kernel	grsecurity
+%endif
 #
 ### DON'T CHANGE THIS ###############
 %define		_nv_ver		1.0
 %define		_nv_rel		7184
 %define		_min_x11	6.7.0
-%define		_rel		1
+%define		_rel		2
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
