@@ -4,12 +4,17 @@
 %bcond_without	smp		# without smp packages
 %bcond_without	kernel		# without kernel packages
 %bcond_with	verbose		# verbose build (V=1)
+%bcond_with	grsec_kernel	# build for kernel-grsecurity
+#
+%if %{with kernel} && %{with dist_kernel} && %{with grsec_kernel}
+%define	alt_kernel	grsecurity
+%endif
 #
 ### DON'T CHANGE THIS ###############
 %define		_nv_ver		1.0
-%define		_nv_rel		7182
+%define		_nv_rel		7184
 %define		_min_x11	6.7.0
-%define		_rel		0.1
+%define		_rel		3
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
@@ -23,25 +28,19 @@ License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
-# Source0-md5:	a7c84815943dc4784a207608abf2e5d6
+# Source0-md5:	68cf7f155786daf6946b9daeb64c7a35
 Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2.run
-# Source1-md5:	5a670a73a8887bdc776064aecae8f769
+# Source1-md5:	332850387c4e7a4619753b856e3199e5
+Source2:	%{oldname}-settings.desktop
+Source3:	%{oldname}-xinitrc.sh
 Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
-Patch2:		%{name}-conftest.patch
-Patch3:		%{name}-verbose.patch
-Patch4:		NVIDIA_kernel-1.0-7174-1258475.diff
-Patch5:		NVIDIA_kernel-1.0-7174-1296092.diff
-Patch6:		NVIDIA_kernel-1.0-7174-1321905.diff
-Patch7:		NVIDIA_kernel-1.0-7174-1361053.diff
-Patch8:		NVIDIA_kernel-1.0-7174-1386866.diff
-Patch9:		%{name}-build-fix.patch
-# http://www.minion.de/files/1.0-6629/
+Patch2:		%{name}-verbose.patch
 URL:		http://www.nvidia.com/object/linux.html
 BuildRequires:	%{kgcc_package}
 #BuildRequires:	X11-devel >= %{_min_x11}	# disabled for now
-%{?with_dist_kernel:BuildRequires:	kernel-module-build >= 3:2.6.7}
-BuildRequires:	rpmbuild(macros) >= 1.213
+%{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
+BuildRequires:	rpmbuild(macros) >= 1.330
 BuildRequires:	sed >= 4.0
 BuildConflicts:	XFree86-nvidia
 Requires:	X11-Xserver
@@ -125,7 +124,7 @@ Tools for advanced control of nVidia graphic cards.
 %description progs -l pl
 Narzêdzia do zarz±dzania kartami graficznymi nVidia.
 
-%package -n kernel-video-nvidia-legacy
+%package -n kernel%{_alt_kernel}-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
@@ -137,20 +136,20 @@ Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:%requires_releq_kernel_up}
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
-Obsoletes:	kernel-video-nvidia < 1.0.7174
-Conflicts:	kernel-video-nvidia
+Obsoletes:	kernel%{_alt_kernel}-video-nvidia < 1.0.7174
+Conflicts:	kernel%{_alt_kernel}-video-nvidia
 
-%description -n kernel-video-nvidia-legacy
+%description -n kernel%{_alt_kernel}-video-nvidia-legacy
 nVidia Architecture support for Linux kernel.
 
-%description -n kernel-video-nvidia-legacy -l de
+%description -n kernel%{_alt_kernel}-video-nvidia-legacy -l de
 Die nVidia-Architektur-Unterstützung für den Linux-Kern.
 
-%description -n kernel-video-nvidia-legacy -l pl
+%description -n kernel%{_alt_kernel}-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa. Pakiet wymagany przez
 sterownik nVidii dla Xorg/XFree86.
 
-%package -n kernel-smp-video-nvidia-legacy
+%package -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
@@ -161,16 +160,16 @@ Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:%requires_releq_kernel_smp}
 Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
-Obsoletes:	kernel-smp-video-nvidia < 1.0.7174
-Conflicts:	kernel-smp-video-nvidia
+Obsoletes:	kernel%{_alt_kernel}-smp-video-nvidia < 1.0.7174
+Conflicts:	kernel%{_alt_kernel}-smp-video-nvidia
 
-%description -n kernel-smp-video-nvidia-legacy
+%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 nVidia Architecture support for Linux kernel SMP.
 
-%description -n kernel-smp-video-nvidia-legacy -l de
+%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy -l de
 Die nVidia-Architektur-Unterstützung für den Linux-Kern SMP.
 
-%description -n kernel-smp-video-nvidia-legacy -l pl
+%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa SMP. Pakiet wymagany
 przez sterownik nVidii dla Xorg/XFree86.
 
@@ -184,63 +183,38 @@ rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
 /bin/sh %{SOURCE1} --extract-only
 %setup -qDT -n NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2
 %endif
-#%patch0 -p1
+%patch0 -p1
 %patch1 -p1
-#%patch2 -p1
 %if %{with verbose}
-%patch3 -p1
+%patch2 -p0
 %endif
-#%patch4 -p0
-#%patch5 -p0
-#%patch6 -p0
-#%patch7 -p0
-#%patch8 -p0
-#%patch9 -p1
 sed -i 's:-Wpointer-arith::' usr/src/nv/Makefile.kbuild
 
 %build
 %if %{with kernel}
 cd usr/src/nv/
 ln -sf Makefile.kbuild Makefile
-for cfg in %{?with_dist_kernel:%{?with_smp:smp} up}%{!?with_dist_kernel:nondist}; do
-	if [ ! -r "%{_kernelsrcdir}/config-$cfg" ]; then
-		exit 1
-	fi
-	install -d o/include/linux
-	ln -sf %{_kernelsrcdir}/config-$cfg o/.config
-	ln -sf %{_kernelsrcdir}/Module.symvers-$cfg o/Module.symvers
-	ln -sf %{_kernelsrcdir}/include/linux/autoconf-$cfg.h o/include/linux/autoconf.h
-%if %{with dist_kernel}
-	%{__make} -C %{_kernelsrcdir} O=$PWD/o prepare scripts
-%else
-	install -d o/include/config
-	touch o/include/config/MARKER
-	ln -sf %{_kernelsrcdir}/scripts o/scripts
-%endif
-	%{__make} -C %{_kernelsrcdir} clean \
-		RCS_FIND_IGNORE="-name '*.ko' -o -name nv-kernel.o -o" \
-		SYSSRC=%{_kernelsrcdir} \
-		SYSOUT=$PWD/o \
-		M=$PWD O=$PWD/o \
-		%{?with_verbose:V=1}
-	%{__make} -C %{_kernelsrcdir} modules \
-		CC="%{__cc}" CPP="%{__cpp}" \
-		SYSSRC=%{_kernelsrcdir} \
-		SYSOUT=$PWD/o \
-		M=$PWD O=$PWD/o \
-		%{?with_verbose:V=1}
-	mv nvidia.ko nvidia-$cfg.ko
-done
+cat >> Makefile <<'EOF'
+
+$(obj)/nv-kernel.o: $(src)/nv-kernel.o.bin
+	cp $< $@
+EOF
+mv nv-kernel.o{,.bin}
+%build_kernel_modules -m nvidia
 %endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}/modules/{drivers,extensions} \
-	$RPM_BUILD_ROOT{/usr/include/GL,/usr/%{_lib}/tls,%{_bindir}}
+	$RPM_BUILD_ROOT{/usr/include/GL,/usr/%{_lib}/tls,%{_bindir}} \
+	$RPM_BUILD_ROOT{%{_pixmapsdir},%{_desktopdir},/etc/X11/xinit/xinitrc.d}
 
 ln -sf $RPM_BUILD_ROOT%{_libdir} $RPM_BUILD_ROOT%{_prefix}/../lib
 
 install usr/bin/nvidia-settings $RPM_BUILD_ROOT%{_bindir}
+install usr/share/pixmaps/nvidia-settings.png $RPM_BUILD_ROOT%{_pixmapsdir}
+install %{SOURCE2} $RPM_BUILD_ROOT%{_desktopdir}/nvidia-settings.desktop
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/X11/xinit/xinitrc.d/nvidia-settings.sh
 install usr/lib/libnvidia-tls.so.%{version} $RPM_BUILD_ROOT/usr/%{_lib}
 install usr/lib/tls/libnvidia-tls.so.%{version} $RPM_BUILD_ROOT/usr/%{_lib}/tls
 install usr/lib/libGL{,core}.so.%{version} $RPM_BUILD_ROOT%{_libdir}
@@ -257,7 +231,6 @@ install usr/X11R6/lib/modules/drivers/nvidia_drv.o $RPM_BUILD_ROOT%{_libdir}/mod
 install usr/X11R6/lib/libXvMCNVIDIA.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 install usr/X11R6/lib/libXvMCNVIDIA.a $RPM_BUILD_ROOT%{_libdir}
 install usr/include/GL/*.h	$RPM_BUILD_ROOT/usr/include/GL
-#install usr/bin/nvidia-settings $RPM_BUILD_ROOT%{_bindir}
 
 ln -sf libGL.so.1 $RPM_BUILD_ROOT%{_libdir}/libGL.so
 ln -sf libglx.so.%{version} $RPM_BUILD_ROOT%{_libdir}/modules/extensions/libglx.so
@@ -268,14 +241,7 @@ ln -sf %{_libdir}/libGL.so.1 $RPM_BUILD_ROOT/usr/%{_lib}/libGL.so.1
 ln -sf %{_libdir}/libGL.so $RPM_BUILD_ROOT/usr/%{_lib}/libGL.so
 
 %if %{with kernel}
-cd usr/src/nv/
-install -d $RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}{,smp}/misc
-install nvidia-%{?with_dist_kernel:up}%{!?with_dist_kernel:nondist}.ko \
-	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}/misc/nvidia.ko
-%if %{with smp} && %{with dist_kernel}
-install nvidia-smp.ko \
-	$RPM_BUILD_ROOT/lib/modules/%{_kernel_ver}smp/misc/nvidia.ko
-%endif
+%install_kernel_modules -m usr/src/nv/nvidia -d misc
 %endif
 
 %clean
@@ -298,16 +264,16 @@ EOF
 
 %postun	-p /sbin/ldconfig
 
-%post	-n kernel-video-nvidia-legacy
+%post	-n kernel%{_alt_kernel}-video-nvidia-legacy
 %depmod %{_kernel_ver}
 
-%postun	-n kernel-video-nvidia-legacy
+%postun	-n kernel%{_alt_kernel}-video-nvidia-legacy
 %depmod %{_kernel_ver}
 
-%post	-n kernel-smp-video-nvidia-legacy
+%post	-n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 %depmod %{_kernel_ver}smp
 
-%postun	-n kernel-smp-video-nvidia-legacy
+%postun	-n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 %depmod %{_kernel_ver}smp
 
 %files
@@ -336,12 +302,12 @@ EOF
 %attr(755,root,root) %{_libdir}/modules/drivers/nvidia_drv.o
 
 %if %{with kernel}
-%files -n kernel-video-nvidia-legacy
+%files -n kernel%{_alt_kernel}-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}/misc/*.ko*
 
 %if %{with smp} && %{with dist_kernel}
-%files -n kernel-smp-video-nvidia-legacy
+%files -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}smp/misc/*.ko*
 %endif
@@ -357,3 +323,6 @@ EOF
 %files progs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/nvidia-settings
+%attr(755,root,root) /etc/X11/xinit/xinitrc.d/*.sh
+%{_desktopdir}/*.desktop
+%{_pixmapsdir}/*
