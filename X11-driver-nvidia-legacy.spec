@@ -14,7 +14,7 @@
 %define		_nv_ver		1.0
 %define		_nv_rel		7184
 %define		_min_x11	6.7.0
-%define		_rel		2
+%define		_rel		3
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
