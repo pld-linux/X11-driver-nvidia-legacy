@@ -1,0 +1,2 @@
+- removed patches 2 and 3, seems to be obsolete
+- doesn't build, is it for >= 2.6.9? could somebody look at this?
