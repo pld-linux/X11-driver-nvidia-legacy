@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	dist_kernel	# without distribution kernel
+%bcond_without	up		# without up packages
 %bcond_without	smp		# without smp packages
 %bcond_without	kernel		# without kernel packages
 %bcond_with	verbose		# verbose build (V=1)
@@ -14,7 +15,7 @@
 %define		_nv_ver		1.0
 %define		_nv_rel		7184
 %define		_min_x11	6.7.0
-%define		_rel		3
+%define		_rel		4
 #####################################
 #
 %define		oldname 	X11-driver-nvidia
