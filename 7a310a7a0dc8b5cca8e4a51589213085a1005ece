@@ -1,0 +1,3 @@
+- removed tls bcond, both versions coexist in one package
+- non tls version is probably to be removed cause tls one works on 2.4 too
+- rel 3
