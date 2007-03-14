@@ -1,0 +1,1 @@
+- fixed _noautoreqdep (it must be SONAME, not filename)
