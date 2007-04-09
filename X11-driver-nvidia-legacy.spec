@@ -18,7 +18,7 @@
 #####################################
 
 %define		oldname 	X11-driver-nvidia
-%define		_rel		5
+%define		_rel		6
 
 Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
@@ -53,6 +53,7 @@ Provides:	XFree86-OpenGL-core
 Provides:	XFree86-OpenGL-libGL
 Obsoletes:	%{oldname} < 1.0.7174
 Obsoletes:	Mesa
+Obsoletes:	Mesa-libGL
 Obsoletes:	X11-OpenGL-core
 Obsoletes:	X11-OpenGL-libGL
 Obsoletes:	XFree86-OpenGL-core
