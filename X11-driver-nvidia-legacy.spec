@@ -13,7 +13,7 @@
 #
 ### DON'T CHANGE THIS ###############
 %define		_nv_ver		1.0
-%define		_nv_rel		7184
+%define		_nv_rel		7185
 %define		_min_x11	6.7.0
 #####################################
 
@@ -29,9 +29,9 @@ License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
-# Source0-md5:	68cf7f155786daf6946b9daeb64c7a35
+# Source0-md5:	f382af60e932449e5e301f1b424d883f
 Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2.run
-# Source1-md5:	332850387c4e7a4619753b856e3199e5
+# Source1-md5:	cdca6c2eb474717935b76dd50c22323f
 Source2:	%{oldname}-settings.desktop
 Source3:	%{oldname}-xinitrc.sh
 Patch0:		%{name}-gcc34.patch
