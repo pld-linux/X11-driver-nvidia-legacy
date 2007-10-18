@@ -12,8 +12,7 @@
 %endif
 #
 ### DON'T CHANGE THIS ###############
-%define		_nv_ver		1.0
-%define		_nv_rel		7185
+%define		_nv_ver		71.86.01
 %define		_min_x11	6.7.0
 #####################################
 
@@ -23,15 +22,15 @@
 Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		X11-driver-nvidia-legacy
-Version:	%{_nv_ver}.%{_nv_rel}
+Version:	%{_nv_ver}
 Release:	%{_rel}
 License:	nVidia Binary
 Group:		X11
 # why not pkg0!?
-Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1.run
-# Source0-md5:	f382af60e932449e5e301f1b424d883f
-Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}-%{_nv_rel}/NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2.run
-# Source1-md5:	cdca6c2eb474717935b76dd50c22323f
+Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{_nv_ver}/NVIDIA-Linux-x86-%{_nv_ver}-pkg1.run
+# Source0-md5:	a4d0d1eb2841a59a4156122a1c08249a
+Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}/NVIDIA-Linux-x86_64-%{_nv_ver}-pkg2.run
+# Source1-md5:	bb273998a661ef5b481e5cd19cf64a3b
 Source2:	%{oldname}-settings.desktop
 Source3:	%{oldname}-xinitrc.sh
 Patch0:		%{name}-gcc34.patch
@@ -130,7 +129,7 @@ Narzêdzia do zarz±dzania kartami graficznymi nVidia.
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
-Version:	%{_nv_ver}.%{_nv_rel}
+Version:	%{_nv_ver}
 Release:	%{_rel}@%{_kernel_ver_str}
 Group:		Base/Kernel
 Requires(post,postun):	/sbin/depmod
@@ -177,13 +176,13 @@ przez sterownik nVidii dla Xorg/XFree86.
 
 %prep
 cd %{_builddir}
-rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-%{_nv_rel}-pkg*
+rm -rf NVIDIA-Linux-x86*-%{_nv_ver}-pkg*
 %ifarch %{ix86}
 /bin/sh %{SOURCE0} --extract-only
-%setup -qDT -n NVIDIA-Linux-x86-%{_nv_ver}-%{_nv_rel}-pkg1
+%setup -qDT -n NVIDIA-Linux-x86-%{_nv_ver}-pkg1
 %else
 /bin/sh %{SOURCE1} --extract-only
-%setup -qDT -n NVIDIA-Linux-x86_64-%{_nv_ver}-%{_nv_rel}-pkg2
+%setup -qDT -n NVIDIA-Linux-x86_64-%{_nv_ver}-pkg2
 %endif
 %patch0 -p1
 %patch1 -p1
