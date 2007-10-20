@@ -34,7 +34,7 @@ Source3:	%{oldname}-xinitrc.sh
 Patch0:		%{name}-gcc34.patch
 Patch1:		%{name}-GL.patch
 Patch2:		%{name}-verbose.patch
-URL:		http://www.nvidia.com/object/linux.html
+URL:		http://www.nvidia.com/object/unix.html
 BuildRequires:	%{kgcc_package}
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
 BuildRequires:	rpmbuild(macros) >= 1.330
