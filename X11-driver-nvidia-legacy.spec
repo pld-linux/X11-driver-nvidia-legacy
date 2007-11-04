@@ -22,11 +22,12 @@
 %define		_min_x11	6.7.0
 #
 %define		oldname 	X11-driver-nvidia
+%define		pname	X11-driver-nvidia-legacy
 %define		_rel	56
 
 Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
-Name:		X11-driver-nvidia-legacy
+Name:		%{pname}%{_alt_kernel}
 Version:	%{_nv_ver}
 Release:	%{_rel}
 License:	nVidia Binary
@@ -37,9 +38,9 @@ Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{_nv_ver}/NVIDIA-Linux
 # Source1-md5:	bb273998a661ef5b481e5cd19cf64a3b
 Source2:	%{oldname}-settings.desktop
 Source3:	%{oldname}-xinitrc.sh
-Patch0:		%{name}-gcc34.patch
-Patch1:		%{name}-GL.patch
-Patch2:		%{name}-verbose.patch
+Patch0:		%{pname}-gcc34.patch
+Patch1:		%{pname}-GL.patch
+Patch2:		%{pname}-verbose.patch
 URL:		http://www.nvidia.com/object/unix.html
 %if %{with kernel}
 BuildRequires:	%{kgcc_package}
@@ -99,7 +100,7 @@ przez ten pakiet.
 Summary:	OpenGL for X11R6 development (only gl?.h)
 Summary(pl):	Pliki nag³ówkowe OpenGL dla systemu X11R6 (tylko gl?.h)
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{pname} = %{version}-%{release}
 Provides:	OpenGL-devel-base
 Obsoletes:	%{oldname}-devel < 1.0.7174
 Obsoletes:	OpenGL-devel-base
@@ -118,7 +119,7 @@ sterowników nvidii.
 Summary:	Tools for advanced control of nVidia graphic cards
 Summary(pl):	Narzêdzia do zarz±dzania kartami graficznymi nVidia
 Group:		Applications/System
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{pname} = %{version}-%{release}
 Obsoletes:	%{oldname}-progs < 1.0.7174
 Obsoletes:	XFree86-driver-nvidia-progs
 Conflicts:	%{oldname}-progs
