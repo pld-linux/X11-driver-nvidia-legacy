@@ -23,7 +23,7 @@
 #
 %define		oldname 	X11-driver-nvidia
 %define		pname	X11-driver-nvidia-legacy
-%define		_rel	59
+%define		_rel	60
 
 Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
