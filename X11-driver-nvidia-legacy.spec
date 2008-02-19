@@ -23,7 +23,7 @@ Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		%{pname}%{_alt_kernel}
 Version:	71.86.01
-Release:	62
+Release:	63
 License:	nVidia Binary
 Group:		X11
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{version}/NVIDIA-Linux-x86-%{version}-pkg1.run
