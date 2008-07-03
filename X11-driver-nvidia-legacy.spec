@@ -18,7 +18,7 @@
 
 %define		oldname 	X11-driver-nvidia
 %define		pname	X11-driver-nvidia-legacy
-%define		rel	1
+%define		rel	2
 Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl.UTF-8):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		%{pname}%{_alt_kernel}
@@ -134,7 +134,7 @@ Requires(post,postun):	/sbin/depmod
 Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:Requires:	kernel%{_alt_kernel}(vermagic) = %{_kernel_ver}}
 Obsoletes:	XFree86-nvidia-kernel
-Obsoletes:	kernel%{_alt_kernel}-smp-video-nvidia
+Obsoletes:	kernel%{_alt_kernel}-smp-video-nvidia-legacy
 Obsoletes:	kernel%{_alt_kernel}-video-nvidia < 1.0.7174
 Conflicts:	kernel%{_alt_kernel}-video-nvidia
 
