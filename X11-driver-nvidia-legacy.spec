@@ -1,8 +1,6 @@
 #
 # Conditional build:
 %bcond_without	dist_kernel	# without distribution kernel
-%bcond_without	up		# without up packages
-%bcond_without	smp		# without smp packages
 %bcond_without	kernel		# without kernel packages
 %bcond_without	userspace	# don't build userspace programs
 %bcond_with	verbose		# verbose build (V=1)
@@ -13,23 +11,25 @@
 %if "%{_alt_kernel}" != "%{nil}"
 %undefine	with_userspace
 %endif
+%if %{without userspace}
+# nothing to be placed to debuginfo package
+%define		_enable_debug_packages	0
+%endif
 
-%define		_min_x11	6.7.0
-#
 %define		oldname 	X11-driver-nvidia
 %define		pname	X11-driver-nvidia-legacy
-
+%define		rel	1
 Summary:	Linux Drivers for nVidia TNT/TNT2/GF/old GF2/Quadro Chips
 Summary(pl):	Sterowniki do kart graficznych nVidia TNT/TNT2/GeForce/old GF2/Quadro
 Name:		%{pname}%{_alt_kernel}
-Version:	71.86.01
-Release:	63
+Version:	71.86.04
+Release:	%{rel}
 License:	nVidia Binary
 Group:		X11
 Source0:	http://download.nvidia.com/XFree86/Linux-x86/%{version}/NVIDIA-Linux-x86-%{version}-pkg1.run
-# Source0-md5:	a4d0d1eb2841a59a4156122a1c08249a
+# Source0-md5:	25bab42ae5295fc5b4baf01a774da25e
 Source1:	http://download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}-pkg2.run
-# Source1-md5:	bb273998a661ef5b481e5cd19cf64a3b
+# Source1-md5:	a970dc3f2d8938472027b5a60db39b69
 Source2:	%{oldname}-settings.desktop
 Source3:	%{oldname}-xinitrc.sh
 Patch0:		%{pname}-gcc34.patch
@@ -39,13 +39,13 @@ URL:		http://www.nvidia.com/object/unix.html
 %if %{with kernel}
 BuildRequires:	%{kgcc_package}
 %{?with_dist_kernel:BuildRequires:	kernel%{_alt_kernel}-module-build >= 3:2.6.7}
-BuildRequires:	rpmbuild(macros) >= 1.330
+BuildRequires:	rpmbuild(macros) >= 1.452
 %endif
 BuildRequires:	sed >= 4.0
 BuildConflicts:	XFree86-nvidia
 Requires:	X11-Xserver
-Requires:	X11-libs >= %{_min_x11}
-Requires:	X11-modules >= %{_min_x11}
+Requires:	X11-libs >= 6.7.0
+Requires:	X11-modules >= 6.7.0
 Provides:	X11-OpenGL-core
 Provides:	X11-OpenGL-libGL
 Provides:	XFree86-OpenGL-core
@@ -128,12 +128,13 @@ Narzêdzia do zarz±dzania kartami graficznymi nVidia.
 Summary:	nVidia kernel module for nVidia Architecture support
 Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
 Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
+Release:	%{rel}@%{_kernel_vermagic}
 Group:		Base/Kernel
 Requires(post,postun):	/sbin/depmod
 Requires:	dev >= 2.7.7-10
 %{?with_dist_kernel:Requires:	kernel%{_alt_kernel}(vermagic) = %{_kernel_ver}}
-Provides:	X11-driver-nvidia(kernel)
 Obsoletes:	XFree86-nvidia-kernel
+Obsoletes:	kernel%{_alt_kernel}-smp-video-nvidia
 Obsoletes:	kernel%{_alt_kernel}-video-nvidia < 1.0.7174
 Conflicts:	kernel%{_alt_kernel}-video-nvidia
 
@@ -146,29 +147,6 @@ Die nVidia-Architektur-Unterstützung für den Linux-Kern.
 %description -n kernel%{_alt_kernel}-video-nvidia-legacy -l pl
 Obs³uga architektury nVidia dla j±dra Linuksa. Pakiet wymagany przez
 sterownik nVidii dla Xorg/XFree86.
-
-%package -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
-Summary:	nVidia kernel module for nVidia Architecture support
-Summary(de):	Das nVidia-Kern-Modul für die nVidia-Architektur-Unterstützung
-Summary(pl):	Modu³ j±dra dla obs³ugi kart graficznych nVidia
-Group:		Base/Kernel
-Requires(post,postun):	/sbin/depmod
-Requires:	dev >= 2.7.7-10
-%{?with_dist_kernel:Requires:	kernel%{_alt_kernel}-smp(vermagic) = %{_kernel_ver}}
-Provides:	X11-driver-nvidia(kernel)
-Obsoletes:	XFree86-nvidia-kernel
-Obsoletes:	kernel%{_alt_kernel}-smp-video-nvidia < 1.0.7174
-Conflicts:	kernel%{_alt_kernel}-smp-video-nvidia
-
-%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
-nVidia Architecture support for Linux kernel SMP.
-
-%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy -l de
-Die nVidia-Architektur-Unterstützung für den Linux-Kern SMP.
-
-%description -n kernel%{_alt_kernel}-smp-video-nvidia-legacy -l pl
-Obs³uga architektury nVidia dla j±dra Linuksa SMP. Pakiet wymagany
-przez sterownik nVidii dla Xorg/XFree86.
 
 %prep
 cd %{_builddir}
@@ -220,7 +198,7 @@ install usr/lib/libGL{,core}.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 install usr/X11R6/lib/modules/extensions/libglx.so.%{version} \
 	$RPM_BUILD_ROOT%{_libdir}/modules/extensions
 
-install usr/X11R6/lib/modules/drivers/nvidia_drv.o $RPM_BUILD_ROOT%{_libdir}/modules/drivers
+install usr/X11R6/lib/modules/drivers/nvidia_drv.so $RPM_BUILD_ROOT%{_libdir}/modules/drivers
 install usr/X11R6/lib/libXvMCNVIDIA.so.%{version} $RPM_BUILD_ROOT%{_libdir}
 install usr/X11R6/lib/libXvMCNVIDIA.a $RPM_BUILD_ROOT%{_libdir}
 install usr/include/GL/*.h	$RPM_BUILD_ROOT/usr/include/GL
@@ -249,7 +227,7 @@ cat << EOF
  *                                                     *
  *  NOTE:                                              *
  *  You must install:                                  *
- *  kernel(24)(-smp)-video-nvidia-legacy-%{version}             *
+ *  kernel-video-nvidia-legacy-%{version}             *
  *  for this driver to work                            *
  *                                                     *
  *******************************************************
@@ -263,12 +241,6 @@ EOF
 
 %postun	-n kernel%{_alt_kernel}-video-nvidia-legacy
 %depmod %{_kernel_ver}
-
-%post	-n kernel%{_alt_kernel}-smp-video-nvidia-legacy
-%depmod %{_kernel_ver}smp
-
-%postun	-n kernel%{_alt_kernel}-smp-video-nvidia-legacy
-%depmod %{_kernel_ver}smp
 
 %if %{with userspace}
 %files
@@ -285,19 +257,13 @@ EOF
 %attr(755,root,root) /usr/%{_lib}/libGL.so.1
 %attr(755,root,root) /usr/%{_lib}/libGL.so
 %attr(755,root,root) %{_libdir}/modules/extensions/libglx.so*
-%attr(755,root,root) %{_libdir}/modules/drivers/nvidia_drv.o
+%attr(755,root,root) %{_libdir}/modules/drivers/nvidia_drv.so
 %endif
 
 %if %{with kernel}
 %files -n kernel%{_alt_kernel}-video-nvidia-legacy
 %defattr(644,root,root,755)
 /lib/modules/%{_kernel_ver}/misc/*.ko*
-
-%if %{with smp} && %{with dist_kernel}
-%files -n kernel%{_alt_kernel}-smp-video-nvidia-legacy
-%defattr(644,root,root,755)
-/lib/modules/%{_kernel_ver}smp/misc/*.ko*
-%endif
 %endif
 
 %if %{with userspace}
