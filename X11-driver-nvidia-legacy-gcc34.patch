@@ -1,11 +1,11 @@
-diff -uNr NVIDIA-Linux-x86-1.0-5336-pkg1/usr/src/nv/nv.c NVIDIA-Linux-x86-1.0-5336-pkg1.fixed/usr/src/nv/nv.c
---- NVIDIA-Linux-x86-1.0-5336-pkg1/usr/src/nv/nv.c	2004-01-15 04:29:11.000000000 +0100
-+++ NVIDIA-Linux-x86-1.0-5336-pkg1.fixed/usr/src/nv/nv.c	2004-02-17 20:53:36.000000000 +0100
-@@ -1496,6 +1496,6 @@
+--- NVIDIA-Linux-x86-71.86.06-pkg1/usr/src/nv/nv.c	2008-07-02 21:26:01.000000000 +0200
++++ NVIDIA-Linux-x86-71.86.06-pkg1/usr/src/nv/nv.c	2008-07-22 15:33:10.000000000 +0200
+@@ -1774,7 +1774,7 @@
      .open   = nv_kern_vma_open,
      .close  = nv_kern_vma_release,  /* "close" */
+ #if !defined(NV_VM_INSERT_PAGE_PRESENT)
 -    .nopage = nv_kern_vma_nopage,
 +    .nopage = nv_kern_vma_nopage
+ #endif
  };
  
- static nv_file_private_t *
